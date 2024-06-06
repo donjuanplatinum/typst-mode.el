@@ -399,6 +399,7 @@
 ;;; Keymaps =================================================
 (defvar typst-mode-map
   (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "$") 'insert-matched-dollar-sign)
     (define-key map (kbd "C-c C-c") 'typst-compile)
     (define-key map (kbd "C-c C-p") 'typst-preview)
     (define-key map (kbd "C-c C-w") 'typst-toggle-watch)
@@ -469,6 +470,13 @@
         (when (string= process-name (process-name process))
           (when (eq (process-status process) 'run)
             (throw 'found t)))))))
+
+(defun insert-matched-dollar-sign ()
+  "Insert a matched dollar sign for Math Block."
+  (interactive)
+  (insert "$  $")
+  (backward-char 2))
+
 
 (defun typst-compile ()
   "Compile the current typst file using typst."
